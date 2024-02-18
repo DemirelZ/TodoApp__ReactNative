@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
+import { styles } from './style'
 
-const index = () => {
+const Header = ({title}) => {
   return (
-    <View>
-      <Text>index</Text>
+    <View style={styles.headerWrapper}>
+      <Text style={styles.titleText} >{title}</Text>
     </View>
   )
 }
 
-export default index
+export default Header
