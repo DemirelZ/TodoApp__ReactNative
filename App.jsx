@@ -12,6 +12,11 @@ const App = () => {
 
   const handleToDoList = () => {
 
+    if(text.length === 0){
+      Alert.alert('Uyarı','Bir şeyler yazmadan listeye ekleme yapamazsınız')
+      return;
+    }
+
     const newTodo = {
       id: new Date().getTime(),
       title:text,
@@ -20,7 +25,8 @@ const App = () => {
       isEdit:false
     }
 
-    setTodos([...todos, newTodo])
+    setTodos([...todos, newTodo]);
+    
 
   }
 
@@ -37,7 +43,7 @@ const App = () => {
         onChangeText={(text)=>setText(text)}
       />
       
-         <Todo  todos={todos}/>
+         <Todo  todos={todos} setTodos={setTodos}/>
       
      
     </SafeAreaView>
