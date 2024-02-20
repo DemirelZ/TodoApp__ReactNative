@@ -35,4 +35,25 @@ export const styles = StyleSheet.create({
   textsWrapper: {
     flex: 7,
   },
+  editTitle: {
+    flex: 7,
+    fontSize: 22,
+    fontWeight: 'bold',
+
+    margin: 5,
+    padding: 5,
+  },
+  editableWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 5,
+    borderWidth:1
+  },
+  editIcons: {
+    flexDirection:'row',
+    padding:3,
+    gap:5,
+    alignItems:'center',
+    justifyContent:'center'
+  },
 });
