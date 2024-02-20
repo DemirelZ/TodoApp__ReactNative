@@ -2,7 +2,7 @@ import {View, TextInput, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {styles} from './style';
 
-const Input = ({placeholder, IconName, onPressChange , value, onChangeText}) => {
+const Input = ({placeholder, IconName, onPressChange , value, onChangeText=()=>{}}) => {
   return (
     <View style={styles.InputWrapper}>
       <TextInput
