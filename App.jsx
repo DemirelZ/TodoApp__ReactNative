@@ -11,10 +11,9 @@ const App = () => {
 
   const handleToDoList = () => {
     if (text.length === 0) {
-      Alert.alert('Uyarı', 'Bir şeyler yazmadan listeye ekleme yapamazsınız');
+      Alert.alert('Notice', 'Please write something to add to the list');
       return;
     }
-
     const newTodo = {
       id: new Date().getTime(),
       title: text,
@@ -22,7 +21,6 @@ const App = () => {
       isComplated: false,
       isEdit: false,
     };
-
     setTodos([...todos, newTodo]);
     setText('');
   };
@@ -31,19 +29,16 @@ const App = () => {
     <SafeAreaView>
       <Header title={'TO DO LIST APP'} />
       <Input
-        placeholder={'bir şeyler yaz'}
+        placeholder={'Type something...'}
         IconName={AddSquare}
         onPressChange={handleToDoList}
         hasIcon={false}
         value={text}
         onChangeText={x => setText(x)}
       />
-
       <Todo todos={todos} setTodos={setTodos} />
     </SafeAreaView>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({});
