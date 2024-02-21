@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
   },
   greenBorder: {
     borderColor: 'green',
+    
   },
   blackBorder: {
     borderColor: 'black',
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 3,
+    gap: 12,
   },
   textsWrapper: {
     flex: 7,
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
   editIcons: {
     flexDirection:'row',
     padding:3,
-    gap:5,
+    gap:10,
     alignItems:'center',
     justifyContent:'center'
   },

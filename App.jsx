@@ -1,9 +1,10 @@
-import {Alert, SafeAreaView, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import {Alert, SafeAreaView} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Header from './src/components/header';
 import Input from './src/components/input';
 import {AddSquare} from 'iconsax-react-native';
 import Todo from './src/components/todo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const [text, setText] = useState('');
@@ -21,9 +22,27 @@ const App = () => {
       isComplated: false,
       isEdit: false,
     };
-    setTodos([...todos, newTodo]);
-    setText('');
+
+    AsyncStorage.setItem('@todos', JSON.stringify([...todos, newTodo]))
+      .then(res => {
+        setTodos([...todos, newTodo]);
+        setText('');
+      })
+      .catch(() =>
+        Alert.alert('Warning', 'an error occurred while adding to do'),
+      );
   };
+
+  useEffect(() => {
+    AsyncStorage.getItem('@todos')
+      .then(res => {
+        if (res !== null) {
+          const parsedRes = JSON.parse(res);
+          setTodos(parsedRes);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <SafeAreaView>

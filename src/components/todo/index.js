@@ -109,10 +109,10 @@ const Todo = ({todos, setTodos}) => {
             {todo.isEdit ? (
               <View style={styles.editIcons}>
                 <TouchableOpacity onPress={() => closeIsEdit(todo.id)}>
-                  <CloseCircle size={28} />
+                  <CloseCircle size={28} color="#FF8A65" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => saveEdit(todo.id)}>
-                  <ClipboardTick size={28} />
+                  <ClipboardTick size={28} color="blue" />
                 </TouchableOpacity>
               </View>
             ) : (
