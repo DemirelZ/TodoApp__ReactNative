@@ -21,6 +21,7 @@ import {styles} from './style';
 const Todo = ({todos, setTodos}) => {
   const [changedText, setChangedText] = useState(changedText);
   const [editMode, setEditMode] = useState(false)
+  const [message, setMessage] = useState('Lütfen boş bırakmayınız');
 
   const handleDelete = ID => {
     Alert.alert('Uyarı', 'Silmek istediğinize emin misiniz?', [
@@ -43,35 +44,47 @@ const Todo = ({todos, setTodos}) => {
     setTodos(newTodos);
   };
 
-  const handleEdit = ID => {
-    setEditMode(true)
+  const handleEdit = (ID, title) => {
+    setEditMode(true);
+    
     const newtodolist = todos.map(todo =>
       todo.id === ID ? {...todo, isEdit: true} : todo,
     );
     setTodos(newtodolist);
+    setChangedText(title)
+
+   
   };
 
   const closeIsEdit = ID => {
-    setEditMode(false)
+    setEditMode(false);
     const newArr = todos.map(todo =>
       todo.id === ID ? {...todo, isEdit: false} : todo,
     );
     setTodos(newArr);
-    
   };
 
-  const saveEdit =(ID)=>{
+  const saveEdit = ID => {
 
-    const newtodos=todos.map((todo)=> todo.id === ID ? {...todo, title:changedText} : todo)
-    setTodos(newtodos)
-    setEditMode(false)
+     if(changedText.length===0){
+      Alert.alert('Lütfen boş bırakmyınız')
+      return
+    }
+    
+    const newtodos = todos.map(todo =>
+      todo.id === ID ? {...todo, title: changedText, isEdit:false} : todo,
+    );
+    setTodos(newtodos);
+    setEditMode(false);
+  };
 
-  }
+  
+  
 
   return (
     <ScrollView style={styles.todosWrapper}>
       {todos.length === 0 ? (
-          <Text style={styles.yokText}> Listede yapılacak bir şey yok</Text>
+        <Text style={styles.yokText}> Listede yapılacak bir şey yok</Text>
       ) : (
         todos.map(todo => (
           <View
@@ -87,9 +100,9 @@ const Todo = ({todos, setTodos}) => {
                 <View style={styles.editableWrapper}>
                   <TextInput
                     style={styles.editTitle}
-                    defaultValue={todo.title}
+                    
                     value={changedText}
-                    onChangeText={(a)=>setChangedText(a)}
+                    onChangeText={a => setChangedText(a)}
                   />
                 </View>
               ) : (
@@ -97,12 +110,12 @@ const Todo = ({todos, setTodos}) => {
               )}
               <Text>{todo.date}</Text>
             </View>
-            {editMode ? (
+            {todo.isEdit ? (
               <View style={styles.editIcons}>
                 <TouchableOpacity onPress={() => closeIsEdit(todo.id)}>
                   <CloseCircle size={28} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>saveEdit(todo.id)}>
+                <TouchableOpacity onPress={() => saveEdit(todo.id)}>
                   <ClipboardTick size={28} />
                 </TouchableOpacity>
               </View>
@@ -114,7 +127,7 @@ const Todo = ({todos, setTodos}) => {
                     color={todo.isComplated === true ? 'green' : '#FF8A65'}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleEdit(todo.id)}>
+                <TouchableOpacity onPress={() => handleEdit(todo.id, todo.title)}>
                   <Edit2 size="28" color="#FF8A65" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleDelete(todo.id)}>
