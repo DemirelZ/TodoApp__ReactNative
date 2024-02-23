@@ -17,11 +17,11 @@ import {
 } from 'iconsax-react-native';
 
 import {styles} from './style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Todo = ({todos, setTodos}) => {
   const [changedText, setChangedText] = useState(changedText);
   const [editMode, setEditMode] = useState(false);
-
 
   const handleDelete = ID => {
     Alert.alert('Notice', 'Are you sure you want to delete?', [
@@ -30,8 +30,11 @@ const Todo = ({todos, setTodos}) => {
         text: 'OK',
         onPress: () => {
           const filteredtodos = todos.filter(todo => todo.id !== ID);
-          setTodos(filteredtodos);
+          AsyncStorage.setItem(
+            '@todos',
+            JSON.stringify(filteredtodos)).then(() => setTodos(filteredtodos))
         },
+        style:'destructive'
       },
     ]);
   };
@@ -41,7 +44,9 @@ const Todo = ({todos, setTodos}) => {
       todo.id === ID ? {...todo, isComplated: !todo.isComplated} : todo,
     );
 
-    setTodos(newTodos);
+    AsyncStorage.setItem('@todos', JSON.stringify(newTodos)).then(() =>
+      setTodos(newTodos),
+    );
   };
 
   const handleEdit = (ID, title) => {
@@ -50,8 +55,11 @@ const Todo = ({todos, setTodos}) => {
     const newtodolist = todos.map(todo =>
       todo.id === ID ? {...todo, isEdit: true} : todo,
     );
-    setTodos(newtodolist);
-    setChangedText(title);
+
+    AsyncStorage.setItem('@todos', JSON.stringify(newtodolist)).then(() => {
+      setTodos(newtodolist);
+      setChangedText(title);
+    });
   };
 
   const closeIsEdit = ID => {
@@ -59,7 +67,10 @@ const Todo = ({todos, setTodos}) => {
     const newArr = todos.map(todo =>
       todo.id === ID ? {...todo, isEdit: false} : todo,
     );
-    setTodos(newArr);
+
+    AsyncStorage.setItem('@todos', JSON.stringify(newArr)).then(() =>
+      setTodos(newArr),
+    );
   };
 
   const saveEdit = ID => {
@@ -71,7 +82,11 @@ const Todo = ({todos, setTodos}) => {
     const newtodos = todos.map(todo =>
       todo.id === ID ? {...todo, title: changedText, isEdit: false} : todo,
     );
-    setTodos(newtodos);
+
+    AsyncStorage.setItem('@todos', JSON.stringify(newtodos)).then(() =>
+      setTodos(newtodos),
+    );
+
     setEditMode(false);
   };
 

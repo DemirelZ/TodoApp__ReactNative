@@ -31,7 +31,8 @@ export const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    marginHorizontal:6,
+    gap: 10,
   },
   textsWrapper: {
     flex: 7,
